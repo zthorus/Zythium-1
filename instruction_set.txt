@@ -1,0 +1,73 @@
+
+
+ZTH1 instruction set
+
+
+Hex. | Op.    | Function           | Mod. Z | Mod. CF | Stack up after
+-----+--------+--------------------+--------+---------+----------------
+00   | NOP    | Wait 1 cycle       | No     | No      | No
+01   | LDH xx | AH <= xx           | No     | No      | No
+02   | LDL xx | AL <= xx           | No     | No      | No
+03   | PSH xx | AH <= xx, stack dn | No     | No      | No
+04   | PSL xx | AL <= xx, stack dn | No     | No      | No
+05   | GTH    | AH <= (A)          | No     | No      | No
+06   | GTL    | AL <= (A)          | No     | No      | No
+07   | GTW    | A <= (A)           | No     | No      | No
+08   | STH    | (B) <= AH          | No     | No      | No
+09   | STL    | (B) <= AL          | No     | No      | No
+0A   | STW    | (B) <= A           | No     | No      | No
+0B   | SWA    | AH <=> AL          | No     | No      | No
+0C   | CLL    | AL <= 0            | No     | No      | No
+0D   | CLH    | AH <= 0            | No     | No      | No
+0E   | DUP    | B <= A, stack dn   | No     | No      | No
+0F   | DRP    | A <= B             | No     | No      | Yes
+10   | SWP    | A <=> B            | No     | No      | No
+11   | RU3    | A,B,C <= B,C,A     | No     | No      | No
+12   | RU4    | A,B,C,D <= B,C,D,A | No     | No      | No
+13   | RD3    | A,B,C <= C,A,B     | No     | No      | No
+14   | RD4    | A,B,C,D <= D,A,B,C | No     | No      | No
+15   | INC    | A <= A + 1         | Yes    | Yes     | No
+16   | DEC    | A <= A - 1         | Yes    | Yes     | No
+17   | ADD    | A <= A + B         | Yes    | Yes     | No
+18   | SUB    | A <= A - B         | Yes    | Yes     | No
+19   | AND    | A <= A & B         | Yes    | Yes 0   | No
+1A   | ORR    | A <= A | B         | Yes    | Yes 0   | No
+1B   | XOR    | A <= A ^ B         | Yes    | Yes 0   | No
+1C   | NOT    | A <= ~A            | Yes    | Yes 0   | No
+1D   | NEG    | A <= -A            | Yes    | Yes     | No
+1E   | CCF    | CF <= 0            | No     | Yes 0   | No
+1F   | SCF    | CF <= 1            | No     | Yes 1   | No
+20   | RRL    | CF -> AL -> CF     | No     | Yes     | No
+21   | RRW    | CF -> A -> CF      | No     | Yes     | No
+22   | RLL    | CF <- AL <- CF     | No     | Yes     | No
+23   | RLW    | CF <- A <- CF      | No     | Yes     | No
+24   | BTT    | Z <= A[B]          | Yes    | No      | No
+25   | CMP    | Z<=(A=B) CF <=(A<B)| Yes    | Yes     | No
+26   | JMP    | PC <= A            | No     | No      | Yes
+27   | JPZ    | PC <= A if Z=1     | No     | No      | Yes
+28   | JNZ    | PC <= A if Z=0     | No     | No      | Yes
+29   | JPC    | PC <= A if CF=1    | No     | No      | Yes
+2A   | JNC    | PC <= A if CF=0    | No     | No      | Yes
+2B   | CAL    | PC <= A, PC-stck dn| No     | No      | Yes
+2C   | CLZ    | CAL if Z=1         | No     | No      | Yes
+2D   | CNZ    | CAL if Z=0         | No     | No      | Yes
+2E   | CLC    | CAL if CF=1        | No     | No      | Yes
+2F   | CNC    | CAL if CF=0        | No     | No      | Yes
+30   | RET    | PC <= PC0, PC-s up | No     | No      | No
+31   | RTZ    | RET if Z=1         | No     | No      | No
+32   | RNZ    | RET if Z=0         | No     | No      | No
+33   | RTC    | RET if CF=1        | No     | No      | No
+34   | RNC    | RET if CF=0        | No     | No      | No
+35   | ENI    | IM[A] <= 0         | No     | No      | No
+36   | DSI    | IM[A] <= 1         | No     | No      | No
+37   | PU1    | (SP) <= A          | No     | No      | No
+38   | PU2    | SP <= SP + 1       | No     | No      | No
+39   | PO1    | Prepare DA for pop | No     | No      | No
+3A   | PO2    | A <= (SP), SP<=SP-1| No     | No      | No
+3B   | OUT    | OL[A] <= CF        | No     | No      | No
+3C   | INP    | CF <= IL[A]        | No     | Yes     | No
+
+
+
+   
+

@@ -1,0 +1,24 @@
+-- ZTH1 computer CPU
+
+-- CPU main characteristics:
+-- * 16-bit
+-- * RISC
+-- * Separated memory for instructions (Harvard architecture).
+-- * Use of stack of registers (like Transputers).
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+use ieee.numeric_std.all; 
+
+entity zth1_cpu is 
+  port (
+         clk : in std_logic;
+			da  : out std_logic_vector(15 downto 0);   -- data address bus
+			dp  : out std_logic_vector(7 downto 0);    -- data page selection
+			dv  : buffer std_logic_vector(15 downto 0) -- data value bus (r/w)
+			ia  : out std_logic_vector(15 downto 0);   -- instruction address bus
+			iv  : in std_logic_vector(15 downto 0);    -- instruction value bus
+			il  : in std_logic_vector(11 downto 0);    -- input lines (for peripheral)
+			ol  : out std_logic_vector(11 downto 0);   -- output lines (for peripheral)

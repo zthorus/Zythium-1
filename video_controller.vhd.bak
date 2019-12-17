@@ -1,0 +1,45 @@
+-- ZTH1 computer video controller
+-- 128 (y) * 192 (x) pixels, 16 colors (defined by LUT in RAM)
+-- direct addressing of video RAM
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+use ieee.numeric_std.all;
+
+entity video_controller is 
+  port (clk25   : in std_logic;
+        addr    : out std_logic_vector(12 downto 0);
+		  d_h     : in std_logic_vector(7 downto 0);
+		  d_l     : in std_logic_vector(7 downto 0);
+		  rden    : out std_logic;
+		  disp_en : out std_logic;
+		  hsync   : out std_logic;
+		  vsync   : out std_logic;
+		  red     : out std_logic_vector(7 downto 0);
+		  green   : out std_logic_vector(7 downto 0);
+		  blue    : out std_logic_vector(7 downto 0)
+		);
+end video_controller
+
+architecture behavior of video_controller is
+begin
+  process(clk25)
+    -- constants for display size and origin are adapted from Video.sv
+	 -- (Maximator example). Values are in pixels
+    constant min_x : integer := 143;
+	 constant min_y : integer := 34;
+	 constant max_x : integer := 794;
+	 constant max_y : integer := 515;
+	 constant hsync_wid : integer := 96;
+	 constant vsync_wid : integer := 2;
+	 variable x : integer := 0;
+	 variable y : integer := 0;
+	 variable a_r : std_logic_vector(15 downto 0);
+	 
+	 process(clk25)
+	   if (rising_edge(clk25)) then
+		  if ((x=0) and (y=0) then
+		    reading_lut := 1;
+			 a_r := 
+			end if;
