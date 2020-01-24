@@ -42,6 +42,8 @@ architecture behavior of zth1 is
   signal ram_h_rd_vbus : std_logic_vector(7 downto 0);
   signal ram_l_rd_vbus : std_logic_vector(7 downto 0);
   signal ram_vrden : std_logic;
+  signal ram_vwren : std_logic;
+  signal sprt_cl : std_logic_vector(7 downto 0);
   -- ZTH1 to ROM signals
   signal rom_a_bus : std_logic_vector(12 downto 0);
   signal rom_d_bus : std_logic_vector(15 downto 0);
@@ -56,6 +58,7 @@ architecture behavior of zth1 is
   signal tmds_r : std_logic_vector(9 downto 0);
   signal tmds_g : std_logic_vector(9 downto 0);
   signal tmds_b : std_logic_vector(9 downto 0);
+ 
   
   signal mem_clk : std_logic;
   signal clk_25MHz : std_logic;
@@ -69,10 +72,10 @@ begin
 	                                   ram_h_zwren,ram_l_zwren,ram_h_zrden,ram_l_zrden,rom_rden);
 												  
   data_ram_h : entity work.ram_h port map(ram_a_zbus,ram_a_vbus,mem_clk,ram_h_wr_zbus,gnd8,ram_h_zrden,ram_vrden,ram_h_zwren,gnd,ram_h_rd_zbus,ram_h_rd_vbus);
-  data_ram_l : entity work.ram_l port map(ram_a_zbus,ram_a_vbus,mem_clk,ram_l_wr_zbus,gnd8,ram_l_zrden,ram_vrden,ram_l_zwren,gnd,ram_l_rd_zbus,ram_l_rd_vbus);
+  data_ram_l : entity work.ram_l port map(ram_a_zbus,ram_a_vbus,mem_clk,ram_l_wr_zbus,sprt_cl,ram_l_zrden,ram_vrden,ram_l_zwren,ram_vwren,ram_l_rd_zbus,ram_l_rd_vbus);
   instruction_rom : entity work.rom port map(rom_a_bus,mem_clk,rom_rden,rom_d_bus);
   
-  video_ctrl : entity work.video_controller port map(clk_25MHz,ram_a_vbus,ram_h_rd_vbus,ram_l_rd_vbus,ram_vrden,d_en,hsyn,vsyn,red_c,grn_c,blu_c);
+  video_ctrl : entity work.video_controller port map(clk_25MHz,ram_a_vbus,ram_h_rd_vbus,ram_l_rd_vbus,sprt_cl,ram_vrden,ram_vwren,d_en,hsyn,vsyn,red_c,grn_c,blu_c);
   tmds_enc_red   : entity work.tmds_encoder port map(clk_25MHz,d_en,gnd,gnd,red_c,tmds_r);
   tmds_enc_green : entity work.tmds_encoder port map(clk_25MHz,d_en,gnd,gnd,grn_c,tmds_g);
   tmds_enc_blue  : entity work.tmds_encoder port map(clk_25MHz,d_en,hsyn,vsyn,blu_c,tmds_b);

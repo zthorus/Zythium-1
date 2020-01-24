@@ -9,6 +9,9 @@
 -- This implementation has been taylored for a 16k RAM (2 * 8k) and 16k ROM (8192 16-bit words) computer. Bus sizes have been ajusted
 -- RAM IP-core use separate in and out data buses.
 
+-- Modifications:
+-- 2020-01-24: allow GTH/GTL/GTW after jump-type instructions
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
@@ -384,8 +387,7 @@ architecture behavior of zth1_cpu is
 								  ftch := '0';
 								  da <= b(12 downto 0);
 				              a <= b; b <= c; c <= d; d <= e; e <= f; f<= g;
-								  -- no GTH/GTL/GTW expected after => RAM will not be read
-								  dhrd <= '0'; dhwr <= '0'; dlrd <= '0'; dlwr <= '0'; 
+								  dhrd <= '1'; dhwr <= '0'; dlrd <= '1'; dlwr <= '0'; 
 								 
 			   -- JPZ : JMP if Z=1
             when x"27" => if (z = '1') then
@@ -399,7 +401,7 @@ architecture behavior of zth1_cpu is
 								  end if;
 								  da <= b(12 downto 0);
 								  a <= b; b <= c; c <= d; d <= e; e <= f; f<= g; 
-								  dhrd <= '0'; dhwr <= '0'; dlrd <= '0'; dlwr <= '0'; 
+								  dhrd <= '1'; dhwr <= '0'; dlrd <= '1'; dlwr <= '0'; 
 								 
 			   -- JNZ : JMP if Z=0
             when x"28" => if (z = '0') then
@@ -413,7 +415,7 @@ architecture behavior of zth1_cpu is
 								  end if;
 								  da <= b(12 downto 0);
 								  a <= b; b <= c; c <= d; d <= e; e <= f; f<= g; 
-                          dhrd <= '0'; dhwr <= '0'; dlrd <= '0'; dlwr <= '0'; 
+                          dhrd <= '1'; dhwr <= '0'; dlrd <= '1'; dlwr <= '0'; 
 								 
 			   -- JPC : JMP if CF=1
             when x"29" => if (cf = '1') then
@@ -427,7 +429,7 @@ architecture behavior of zth1_cpu is
 								  end if;
 								  da <= b(12 downto 0);
 				              a <= b; b <= c; c <= d; d <= e; e <= f; f<= g; 		
-						        dhrd <= '0'; dhwr <= '0'; dlrd <= '0'; dlwr <= '0';
+						        dhrd <= '1'; dhwr <= '0'; dlrd <= '1'; dlwr <= '0';
 								 
 			   -- JNC : JMP if CF=0
             when x"2A" => if (cf = '0') then
@@ -441,7 +443,7 @@ architecture behavior of zth1_cpu is
 								  end if;
 								  da <= b(12 downto 0);
 				              a <= b; b <= c; c <= d; d <= e; e <= f; f<= g;
-								  dhrd <= '0'; dhwr <= '0'; dlrd <= '0'; dlwr <= '0'; 
+								  dhrd <= '1'; dhwr <= '0'; dlrd <= '1'; dlwr <= '0'; 
 								 
 			   -- CAL : call sub-routine at address in A; shift pc-stack down ; shift register-stack up 
             when x"2B" => ps7 <= ps6; ps6 <= ps5; ps5 <= ps4; ps4 <= ps3; ps3 <= ps2; ps2 <= ps1; ps1 <= ps0;
@@ -479,7 +481,7 @@ architecture behavior of zth1_cpu is
                           end if;
 								  da <= b(12 downto 0);
 								  a <= b; b <= c; c <= d; d <= e; e <= f; f<= g;
-							     dhrd <= '0'; dhwr <= '0'; dlrd <= '0'; dlwr <= '0'; 	
+							     dhrd <= '1'; dhwr <= '0'; dlrd <= '1'; dlwr <= '0'; 	
 								
 			   -- CNZ : CAL if Z=0
             when x"2D" => if (z = '0') then  
@@ -500,7 +502,7 @@ architecture behavior of zth1_cpu is
 								  end if;	
 								  da <= b(12 downto 0);
 				              a <= b; b <= c; c <= d; d <= e; e <= f; f<= g;
-							     dhrd <= '0'; dhwr <= '0'; dlrd <= '0'; dlwr <= '0'; 	 
+							     dhrd <= '1'; dhwr <= '0'; dlrd <= '1'; dlwr <= '0'; 	 
                          							 
 			   -- CLC : CAL if CF=1
             when x"2E" => if (cf = '1') then  
@@ -521,7 +523,7 @@ architecture behavior of zth1_cpu is
 								  end if;
 								  da <= b(12 downto 0);
 				              a <= b; b <= c; c <= d; d <= e; e <= f; f<= g; 	
-                          dhrd <= '0'; dhwr <= '0'; dlrd <= '0'; dlwr <= '0'; 
+                          dhrd <= '1'; dhwr <= '0'; dlrd <= '1'; dlwr <= '0'; 
 								 
 			   -- CNC : CAL if CF=0
             when x"2F" => if (cf = '0') then  
@@ -542,7 +544,7 @@ architecture behavior of zth1_cpu is
 								  end if;	
 								  da <= b(12 downto 0);
 				              a <= b; b <= c; c <= d; d <= e; e <= f; f<= g; 	
-                          dhrd <= '0'; dhwr <= '0'; dlrd <= '0'; dlwr <= '0';		
+                          dhrd <= '1'; dhwr <= '0'; dlrd <= '1'; dlwr <= '0';		
 								 
 	         -- RET : return from subroutine
             when x"30" => pc <= ps0(16 downto 1);
