@@ -9,6 +9,7 @@ ZTH1 CPU, with 8 k-words of instruction ROM and 8 k-words of data RAM
 (including the video memory). The video controller of this computer has an HDMI
 output to display 128 x 192 pixel images with 16 colors. It also features
 the display of eight 8x8-pixel sprites, which makes this computer suitable for
-developing and playing simple arcade video games. The manual (in PDF)
-describing the ZTH1 CPU and how to program it is included in this repository.
+developing and playing simple arcade video games. This repository includes manual (ZTH1_CPU.pdf)
+describing the ZTH1 CPU and how to program it and a manual (ZTH1_MC.pdf) describing the micro-computer
+architecture with a focus on the video-controller.
 
