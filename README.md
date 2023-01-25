@@ -15,6 +15,6 @@ the display of eight 8x8-pixel sprites, which makes this computer suitable for
 developing and playing simple arcade video games.
 
 This repository includes a manual (ZTH1_CPU.pdf)
-describing the ZTH1 CPU and how to program it, and another manual (ZTH1_MC.pdf) describing the Zythium-1 micro-computer
+describing the ZTH1 CPU and how to program it, and another manual (Zythium1.pdf) describing the Zythium-1 micro-computer
 architecture with a focus on the video-controller.
 
